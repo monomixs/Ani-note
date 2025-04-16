@@ -1,0 +1,1205 @@
+* {
+  -webkit-tap-highlight-color: transparent; 
+
+  -webkit-user-select: none; 
+
+  -moz-user-select: none;    
+    
+  -ms-user-select: none;
+    
+  user-select: none;
+
+  outline: none;
+}
+
+/* ==================== Base Styles ==================== */
+:root {
+    /* Light Theme Colors */
+    --light-bg: #f5f7fa;
+    --light-card-bg: #ffffff;
+    --light-text: #333333;
+    --light-text-secondary: #666666;
+    --light-border: #e0e0e0;
+    --light-shadow: rgba(0, 0, 0, 0.1);
+    
+    /* Dark Theme Colors */
+    --dark-bg: #000000;
+    --dark-card-bg: #121212;
+    --dark-text: #ffffff;
+    --dark-text-secondary: #a0a0a0;
+    --dark-border: #333333;
+    --dark-shadow: rgba(255, 255, 255, 0.05);
+    
+    /* Primary Colors */
+    --sky-blue: #4cb4f9;
+    --sky-blue-hover: #3da5ea;
+    --purple: #8a6bf2;
+    --purple-hover: #7b5ce3;
+    --teal: #20c997;
+    --teal-hover: #1db589;
+    --orange: #ff9d2c;
+    --orange-hover: #f08e1d;
+    --pink: #f74c8a;
+    --pink-hover: #e8397b;
+    --red: #ff4d4d;
+    --red-hover: #e83e3e;
+    --lime: #82c91e;
+    --lime-hover: #74b816;
+    --indigo: #6610f2;
+    --indigo-hover: #5b0edb;
+    --amber: #ffc107;
+    --amber-hover: #e6af0a;
+    --emerald: #10b981;
+    --emerald-hover: #0ea46e;
+    --ruby: #e91e63;
+    --ruby-hover: #d81557;
+    --slate: #6c757d;
+    --slate-hover: #5a6268;
+    
+    /* Animation Speeds */
+    --anim-speed-fast: 0.15s;
+    --anim-speed-medium: 0.3s;
+    --anim-speed-slow: 0.5s;
+    
+    /* Sizes */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 18px;
+    --border-radius-xl: 24px;
+    --border-radius-round: 50px;
+    
+    /* Current Theme Variables - Will be modified by JS */
+    --bg-color: var(--light-bg);
+    --card-bg: var(--light-card-bg);
+    --text-color: var(--light-text);
+    --text-color-secondary: var(--light-text-secondary);
+    --border-color: var(--light-border);
+    --shadow-color: var(--light-shadow);
+    
+    /* Current Primary Color - Will be modified by JS */
+    --primary-color: var(--sky-blue);
+    --primary-color-hover: var(--sky-blue-hover);
+    
+    /* Private Mode Color - Always red */
+    --private-color: var(--red);
+    --private-color-hover: var(--red-hover);
+}
+
+/* Reset & Basics */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color var(--anim-speed-medium) ease,
+                color var(--anim-speed-medium) ease,
+                border-color var(--anim-speed-medium) ease,
+                box-shadow var(--anim-speed-medium) ease;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    color: inherit;
+    outline: none;
+}
+
+input, textarea {
+    font-family: inherit;
+    border: none;
+    border-radius: var(--border-radius-md);
+    padding: 15px 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    width: 100%;
+    outline: none;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: all var(--anim-speed-fast) ease;
+    font-size: 1rem;
+}
+
+input:focus, textarea:focus {
+    box-shadow: 0 4px 15px var(--shadow-color), 0 0 0 2px var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.dark-theme input, .dark-theme textarea {
+    background-color: rgba(30, 30, 30, 0.6);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.6;
+}
+
+/* ==================== Layout ==================== */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.content-area {
+    padding: 90px 0 40px; /* Space for fixed navbar */
+    position: relative;
+}
+
+/* ==================== Navigation Bar ==================== */
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+    box-shadow: 0 2px 15px var(--shadow-color);
+    transition: all var(--anim-speed-medium) ease;
+}
+
+.dark-theme .nav-bar {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: color var(--anim-speed-medium) ease;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-bg);
+    color: var(--text-color-secondary);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.nav-icon-btn i {
+    font-size: 18px;
+    transition: transform var(--anim-speed-medium) ease;
+}
+
+.nav-icon-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#settings-btn:hover i {
+    transform: rotate(30deg);
+}
+
+#search-btn:hover i {
+    transform: scale(1.2);
+}
+
+#private-mode-btn:hover i {
+    transform: scale(1.1);
+}
+
+.nav-icon-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+/* Search Container Styles */
+.search-container {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    padding: 0 40px;
+    z-index: 99;
+}
+
+.search-container.active {
+    display: block;
+    animation: slideDown 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+.search-box {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.search-box::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: var(--primary-color);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    padding: 8px 5px;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    box-shadow: none;
+    transform: none;
+}
+
+.close-search-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.close-search-btn:hover {
+    background-color: var(--bg-color);
+    color: var(--red);
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== New Note Button ==================== */
+.new-note-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: var(--border-radius-round);
+    padding: 15px 25px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all var(--anim-speed-medium) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+}
+
+.new-note-btn.private {
+    background-color: var(--private-color);
+}
+
+.new-note-btn i {
+    font-size: 16px;
+    transition: transform var(--anim-speed-medium) ease;
+}
+
+.new-note-btn:hover {
+    background-color: var(--primary-color-hover);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.new-note-btn.private:hover {
+    background-color: var(--private-color-hover);
+}
+
+.new-note-btn:hover i {
+    transform: rotate(90deg);
+}
+
+.new-note-btn:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation for new note button when clicked */
+.new-note-btn.clicked {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== Notes Container ==================== */
+.notes-container, .private-notes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.note-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    padding: 20px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: all var(--anim-speed-medium) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.note-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: transform var(--anim-speed-medium) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: scaleY(0);
+    transform-origin: bottom;
+}
+
+.note-card.private::before {
+    background-color: var(--private-color);
+}
+
+.note-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.note-card:hover::before {
+    transform: scaleY(1);
+}
+
+.note-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.note-content {
+    font-size: 0.95rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 15px;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.note-action-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.note-action-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.note-action-btn.delete:hover {
+    background-color: var(--red);
+}
+
+.note-action-btn i {
+    font-size: 15px;
+}
+
+.private-note-card .note-action-btn:hover {
+    background-color: var(--private-color);
+}
+
+/* Empty state styling */
+.empty-state {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--text-color-secondary);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+    color: var(--primary-color);
+}
+
+/* Search results styling */
+.search-indicator {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border-left: 4px solid var(--primary-color);
+}
+
+.search-no-results {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--text-color-secondary);
+}
+
+.clear-search-btn {
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.clear-search-btn:hover {
+    background-color: var(--border-color);
+    transform: translateY(-2px);
+}
+
+.search-result {
+    position: relative;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+/* ==================== Note Editor Popup ==================== */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--anim-speed-medium) ease,
+                visibility var(--anim-speed-medium) ease;
+}
+
+.popup-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transform: scale(0.9);
+    opacity: 0;
+    transition: transform var(--anim-speed-medium) cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                opacity var(--anim-speed-medium) ease;
+}
+
+.popup-overlay.active .popup {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.popup-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-header h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.close-popup-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.close-popup-btn:hover {
+    background-color: var(--red);
+    color: white;
+    transform: rotate(90deg);
+}
+
+.popup-content {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.note-editor-popup .popup-content {
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    margin: 0 10px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.popup-footer {
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+/* Form groups in popup */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Note input fields styling */
+.note-title-input, .note-content-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    transition: all var(--anim-speed-fast) ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+    font-family: inherit;
+}
+
+.note-title-input {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.note-content-input {
+    min-height: 200px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.note-title-input:focus, .note-content-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05), inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Buttons in popup footer */
+.save-btn, .cancel-btn, .delete-btn {
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.save-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.save-btn:hover {
+    background-color: var(--primary-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cancel-btn {
+    background-color: var(--bg-color);
+    color: var(--text-color-secondary);
+}
+
+.cancel-btn:hover {
+    background-color: var(--border-color);
+    transform: translateY(-2px);
+}
+
+.delete-btn {
+    background-color: var(--red);
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: var(--red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== PIN Entry ==================== */
+.pin-entry-popup {
+    max-width: 360px;
+}
+
+.pin-display {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.pin-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.pin-dot.filled {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.private-mode .pin-dot.filled {
+    background-color: var(--private-color);
+    border-color: var(--private-color);
+}
+
+.pin-message {
+    text-align: center;
+    color: var(--red);
+    font-weight: 500;
+    margin-bottom: 20px;
+    min-height: 24px;
+}
+
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.pin-key {
+    height: 60px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.pin-key:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.pin-key:active {
+    transform: translateY(0);
+    background-color: var(--primary-color-hover);
+}
+
+.private-mode .pin-key:hover {
+    background-color: var(--private-color);
+}
+
+.private-mode .pin-key:active {
+    background-color: var(--private-color-hover);
+}
+
+.pin-clear, .pin-delete {
+    font-size: 0.9rem;
+}
+
+/* PIN Change Styles */
+.pin-step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    position: relative;
+    padding: 0 5px;
+}
+
+.pin-step-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background-color: var(--border-color);
+    z-index: 1;
+    transform: translateY(-50%);
+}
+
+.pin-step {
+    background-color: var(--card-bg);
+    color: var(--text-color-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 2;
+    transition: all var(--anim-speed-medium) ease;
+}
+
+.pin-step.active {
+    background-color: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.private-mode .pin-step.active {
+    background-color: var(--private-color);
+}
+
+/* Change PIN Button */
+.action-btn {
+    padding: 12px 20px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--anim-speed-medium) ease;
+    width: 100%;
+}
+
+.action-btn i {
+    font-size: 0.9rem;
+}
+
+.action-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.pin-btn:hover {
+    background-color: var(--private-color);
+}
+
+/* ==================== Settings Popup ==================== */
+.settings-popup {
+    max-width: 450px;
+}
+
+.setting-group {
+    margin-bottom: 30px;
+}
+
+.setting-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.theme-toggle {
+    display: flex;
+    gap: 15px;
+}
+
+.theme-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.theme-btn i {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.theme-btn.light-btn i {
+    color: #f9d71c;
+}
+
+.theme-btn.dark-btn i {
+    color: #7e8fbc;
+}
+
+.theme-btn:hover {
+    transform: translateY(-2px);
+    background-color: var(--border-color);
+}
+
+.theme-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.theme-btn.active i {
+    color: white;
+}
+
+.color-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.color-option {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    transition: all var(--anim-speed-fast) ease;
+    cursor: pointer;
+}
+
+.color-option:hover {
+    transform: scale(1.1);
+}
+
+.color-option.active {
+    border-color: var(--text-color);
+    transform: scale(1.2);
+}
+
+.color-option.sky-blue {
+    background-color: var(--sky-blue);
+}
+
+.color-option.purple {
+    background-color: var(--purple);
+}
+
+.color-option.teal {
+    background-color: var(--teal);
+}
+
+.color-option.orange {
+    background-color: var(--orange);
+}
+
+.color-option.pink {
+    background-color: var(--pink);
+}
+
+.color-option.lime {
+    background-color: var(--lime);
+}
+
+.color-option.indigo {
+    background-color: var(--indigo);
+}
+
+.color-option.amber {
+    background-color: var(--amber);
+}
+
+.color-option.emerald {
+    background-color: var(--emerald);
+}
+
+.color-option.ruby {
+    background-color: var(--ruby);
+}
+
+.color-option.slate {
+    background-color: var(--slate);
+}
+
+/* ==================== Private Mode ==================== */
+.private-mode-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 90;
+    padding: 80px 20px 20px;
+    transform: translateX(100%);
+    transition: transform var(--anim-speed-slow) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow-y: auto;
+}
+
+.private-mode-container.active {
+    transform: translateX(0);
+}
+
+.private-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 20px;
+}
+
+.private-header h2 {
+    font-size: 1.8rem;
+    color: var(--private-color);
+}
+
+.exit-private-mode-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-bg);
+    color: var(--text-color-secondary);
+    transition: all var(--anim-speed-fast) ease;
+}
+
+.exit-private-mode-btn:hover {
+    background-color: var(--private-color);
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* ==================== Animations ==================== */
+@keyframes slideIn {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply animations to elements */
+.note-card {
+    animation: scaleIn var(--anim-speed-medium) forwards;
+}
+
+/* ==================== Theme Classes ==================== */
+.dark-theme {
+    --bg-color: var(--dark-bg);
+    --card-bg: var(--dark-card-bg);
+    --text-color: var(--dark-text);
+    --text-color-secondary: var(--dark-text-secondary);
+    --border-color: var(--dark-border);
+    --shadow-color: var(--dark-shadow);
+}
+
+/* ==================== Media Queries ==================== */
+@media (max-width: 768px) {
+    .nav-bar {
+        padding: 15px 20px;
+    }
+    
+    .notes-container, .private-notes-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .popup {
+        width: 95%;
+    }
+    
+    .pin-key {
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .new-note-btn {
+        padding: 12px 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+    
+    .logo h1 {
+        font-size: 1.2rem;
+    }
+    
+    .popup-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    .theme-toggle {
+        flex-direction: column;
+    }
+    
+    .color-options {
+        justify-content: center;
+    }
+}
+
+/* Custom animations for specific elements */
+.new-note-btn.animate-in {
+    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3) translateY(100px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05) translateY(-10px);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(0.9) translateY(5px);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+.settings-btn.spin {
+    animation: rotate 0.5s ease forwards;
+}
+
+/* Style for specific elements in private mode */
+body.private-mode {
+    --primary-color: var(--red);
+    --primary-color-hover: var(--red-hover);
+}
+
+body.private-mode .nav-bar {
+    border-bottom-color: var(--private-color);
+}
+
+body.private-mode .logo h1 {
+    color: var(--private-color);
+}
