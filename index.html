@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ani-note</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-theme" data-primary-color="sky-blue">
+    <div class="app-container">
+        <!-- Navigation Bar -->
+        <nav class="nav-bar">
+            <div class="logo">
+                <h1>ani-note</h1>
+            </div>
+            <div class="nav-buttons">
+                <button id="search-btn" class="nav-icon-btn" aria-label="Search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button id="settings-btn" class="nav-icon-btn" aria-label="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button id="private-mode-btn" class="nav-icon-btn private-mode-btn" aria-label="Private Mode">
+                    <i class="fas fa-lock"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Search Box (Hidden by default) -->
+        <div class="search-container" id="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" class="search-input" placeholder="Search notes...">
+                <button id="close-search-btn" class="close-search-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+            <div class="notes-container" id="notes-container">
+                <!-- Notes will be dynamically added here -->
+                <div class="empty-state" id="empty-state">
+                    <i class="fas fa-sticky-note empty-icon"></i>
+                    <p>No notes yet. Create your first note!</p>
+                </div>
+            </div>
+
+            <!-- New Note Button -->
+            <button id="new-note-btn" class="new-note-btn">
+                <span class="btn-text">New Note</span>
+                <i class="fas fa-plus"></i>
+            </button>
+        </main>
+
+        <!-- Private Mode Area (Hidden by default) -->
+        <div class="private-mode-container" id="private-mode-container">
+            <div class="private-header">
+                <h2>Private Notes</h2>
+                <button id="exit-private-mode-btn" class="exit-private-mode-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="private-notes-container" id="private-notes-container">
+                <!-- Private notes will be added here -->
+                <div class="empty-state" id="private-empty-state">
+                    <i class="fas fa-lock empty-icon"></i>
+                    <p>No private notes yet. Create your first private note!</p>
+                </div>
+            </div>
+            <button id="new-private-note-btn" class="new-note-btn private">
+                <span class="btn-text">New Private Note</span>
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- Note Editor Popup Template (Hidden by default) -->
+        <div class="popup-overlay" id="note-editor-overlay">
+            <div class="popup note-editor-popup">
+                <div class="popup-header">
+                    <h2 id="note-editor-title">New Note</h2>
+                    <button class="close-popup-btn" id="close-note-editor">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="popup-content">
+                    <div class="form-group">
+                        <label for="note-title">Title</label>
+                        <input type="text" id="note-title" class="note-title-input" placeholder="Note Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="note-content">Content</label>
+                        <textarea id="note-content" class="note-content-input" placeholder="Write your note here..."></textarea>
+                    </div>
+                </div>
+                <div class="popup-footer">
+                    <button id="save-note-btn" class="save-btn">Save</button>
+                    <button id="cancel-note-btn" class="cancel-btn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIN Entry Popup (Hidden by default) -->
+        <div class="popup-overlay" id="pin-entry-overlay">
+            <div class="popup pin-entry-popup">
+                <div class="popup-header">
+                    <h2 id="pin-entry-title">Enter PIN</h2>
+                    <button class="close-popup-btn" id="close-pin-entry">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="popup-content">
+                    <div class="pin-display">
+                        <div class="pin-dot" data-index="0"></div>
+                        <div class="pin-dot" data-index="1"></div>
+                        <div class="pin-dot" data-index="2"></div>
+                        <div class="pin-dot" data-index="3"></div>
+                    </div>
+                    <div class="pin-message" id="pin-message"></div>
+                    <div class="pin-keypad">
+                        <button class="pin-key" data-key="1">1</button>
+                        <button class="pin-key" data-key="2">2</button>
+                        <button class="pin-key" data-key="3">3</button>
+                        <button class="pin-key" data-key="4">4</button>
+                        <button class="pin-key" data-key="5">5</button>
+                        <button class="pin-key" data-key="6">6</button>
+                        <button class="pin-key" data-key="7">7</button>
+                        <button class="pin-key" data-key="8">8</button>
+                        <button class="pin-key" data-key="9">9</button>
+                        <button class="pin-key pin-clear" data-key="clear">Clear</button>
+                        <button class="pin-key" data-key="0">0</button>
+                        <button class="pin-key pin-delete" data-key="delete">
+                            <i class="fas fa-backspace"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Popup (Hidden by default) -->
+        <div class="popup-overlay" id="settings-overlay">
+            <div class="popup settings-popup">
+                <div class="popup-header">
+                    <h2>Settings</h2>
+                    <button class="close-popup-btn" id="close-settings">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="popup-content">
+                    <div class="setting-group">
+                        <label class="setting-label">Theme</label>
+                        <div class="theme-toggle">
+                            <button id="light-theme-btn" class="theme-btn light-btn active">
+                                <i class="fas fa-sun"></i>
+                                Light
+                            </button>
+                            <button id="dark-theme-btn" class="theme-btn dark-btn">
+                                <i class="fas fa-moon"></i>
+                                Dark
+                            </button>
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label class="setting-label">Primary Color</label>
+                        <div class="color-options">
+                            <button class="color-option sky-blue active" data-color="sky-blue"></button>
+                            <button class="color-option purple" data-color="purple"></button>
+                            <button class="color-option teal" data-color="teal"></button>
+                            <button class="color-option orange" data-color="orange"></button>
+                            <button class="color-option pink" data-color="pink"></button>
+                            <button class="color-option lime" data-color="lime"></button>
+                            <button class="color-option indigo" data-color="indigo"></button>
+                            <button class="color-option amber" data-color="amber"></button>
+                            <button class="color-option emerald" data-color="emerald"></button>
+                            <button class="color-option ruby" data-color="ruby"></button>
+                            <button class="color-option slate" data-color="slate"></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Private Mode Settings (Only visible in private mode) -->
+                    <div class="setting-group private-settings" id="private-settings" style="display: none;">
+                        <label class="setting-label">Private Mode Security</label>
+                        <button id="change-pin-btn" class="action-btn pin-btn">
+                            <i class="fas fa-key"></i>
+                            Change PIN
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Alert Template (Hidden by default) -->
+        <div class="popup-overlay" id="alert-overlay">
+            <div class="popup alert-popup">
+                <div class="popup-header">
+                    <h2 id="alert-title">Alert</h2>
+                    <button class="close-popup-btn" id="close-alert">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="popup-content">
+                    <p id="alert-message"></p>
+                </div>
+                <div class="popup-footer">
+                    <button id="alert-ok-btn" class="save-btn">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Dialog Template (Hidden by default) -->
+        <div class="popup-overlay" id="confirm-overlay">
+            <div class="popup confirm-popup">
+                <div class="popup-header">
+                    <h2 id="confirm-title">Confirm</h2>
+                    <button class="close-popup-btn" id="close-confirm">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="popup-content">
+                    <p id="confirm-message"></p>
+                </div>
+                <div class="popup-footer">
+                    <button id="confirm-yes-btn" class="delete-btn">Yes</button>
+                    <button id="confirm-no-btn" class="cancel-btn">No</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Change PIN Popup (Hidden by default) -->
+        <div class="popup-overlay" id="change-pin-overlay">
+            <div class="popup pin-entry-popup">
+                <div class="popup-header">
+                    <h2 id="change-pin-title">Change PIN</h2>
+                    <button class="close-popup-btn" id="close-change-pin">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="popup-content">
+                    <div class="pin-step-indicator">
+                        <div class="pin-step active" data-step="1">Current PIN</div>
+                        <div class="pin-step" data-step="2">New PIN</div>
+                        <div class="pin-step" data-step="3">Confirm PIN</div>
+                    </div>
+                    
+                    <div class="pin-display">
+                        <div class="pin-dot" data-index="0"></div>
+                        <div class="pin-dot" data-index="1"></div>
+                        <div class="pin-dot" data-index="2"></div>
+                        <div class="pin-dot" data-index="3"></div>
+                    </div>
+                    <div class="pin-message" id="change-pin-message"></div>
+                    <div class="pin-keypad">
+                        <button class="pin-key" data-key="1">1</button>
+                        <button class="pin-key" data-key="2">2</button>
+                        <button class="pin-key" data-key="3">3</button>
+                        <button class="pin-key" data-key="4">4</button>
+                        <button class="pin-key" data-key="5">5</button>
+                        <button class="pin-key" data-key="6">6</button>
+                        <button class="pin-key" data-key="7">7</button>
+                        <button class="pin-key" data-key="8">8</button>
+                        <button class="pin-key" data-key="9">9</button>
+                        <button class="pin-key pin-clear" data-key="clear">Clear</button>
+                        <button class="pin-key" data-key="0">0</button>
+                        <button class="pin-key pin-delete" data-key="delete">
+                            <i class="fas fa-backspace"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/animations.js"></script>
+    <script src="js/popup.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/private-mode.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
